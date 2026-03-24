@@ -23708,7 +23708,7 @@ function closeLicenseScreen() {
 function updateTrialBanner() {
   const navItem = document.getElementById('nav-lizenz-item');
   if (navItem) {
-    navItem.style.display = isFullLicense() ? 'none' : 'flex';
+    navItem.style.display = 'none';
   }
   // Trial-Info auf dem Lizenz-Screen aktualisieren
   const trialInfo = document.getElementById('trial-active-info');
