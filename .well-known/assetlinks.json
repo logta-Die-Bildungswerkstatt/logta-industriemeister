@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.github.logta_die_bildungswerkstatt.twa",
+      "sha256_cert_fingerprints": [
+        "0A:E8:0F:F5:C6:67:20:80:BE:3F:E6:95:D7:20:35:FA:8D:7E:38:F0:43:EE:63:6B:B6:1E:78:85:D6:E3:54:1C"
+      ]
+    }
+  }
+]
