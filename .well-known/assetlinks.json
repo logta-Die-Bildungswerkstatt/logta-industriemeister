@@ -1,13 +1,14 @@
 [
   {
     "relation": [
-      "delegate_permission/common.handle_all_urls"
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
     ],
     "target": {
       "namespace": "android_app",
-      "package_name": "io.github.logta_die_bildungswerkstatt.twa",
+      "package_name": "de.logta.industriemeister.bq",
       "sha256_cert_fingerprints": [
-        "0A:E8:0F:F5:C6:67:20:80:BE:3F:E6:95:D7:20:35:FA:8D:7E:38:F0:43:EE:63:6B:B6:1E:78:85:D6:E3:54:1C"
+        "A4:70:75:06:47:47:AE:D9:7D:3B:9D:04:46:1B:B1:E8:1E:DB:AD:BC:1A:19:EA:24:D1:D2:78:A3:61:65:61:F7"
       ]
     }
   }
