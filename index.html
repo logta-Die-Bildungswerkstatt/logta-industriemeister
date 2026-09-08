@@ -1805,7 +1805,7 @@
 
     <!-- Was bekommst du -->
     <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:18px 20px;margin-bottom:20px;">
-      <div style="font-family:'Exo 2',sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:1px;margin-bottom:12px;">VOLLVERSION ENTHÄLT</div>
+      <div style="font-family:'Exo 2',sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:1px;margin-bottom:12px;">DIE VOLLSTÄNDIGE APP ENTHÄLT ENTHÄLT</div>
       <div style="display:flex;flex-direction:column;gap:9px;">
         <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.85);">
           <span style="color:#22c55e;font-size:15px;">✓</span> 5 Fachbereiche · 28 Kapitel
@@ -1820,7 +1820,7 @@
           <span style="color:#22c55e;font-size:15px;">✓</span> Fortschrittsverfolgung & Statistiken
         </div>
         <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.85);">
-          <span style="color:#22c55e;font-size:15px;">✓</span> Einmaliger Kauf · Kein Abo · Für immer
+          <span style="color:#22c55e;font-size:15px;">✓</span> Diese Vorschau: Fachbereich MIKP komplett
         </div>
       </div>
     </div>
@@ -1828,18 +1828,16 @@
     <!-- Kauf-Karte -->
     <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:24px;">
 
-      <!-- Fehleranzeige IAP -->
-      <div id="iap-error" style="display:none;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:10px;padding:10px;margin-bottom:14px;font-size:12px;color:#ef4444;text-align:center;"></div>
-
-      <!-- Kaufen Button -->
-      <button id="iap-buy-btn" onclick="iapPurchase()"
-        style="width:100%;background:linear-gradient(135deg,#E82020,#b51818);border:none;border-radius:14px;padding:17px;font-family:'Exo 2',sans-serif;font-size:17px;font-weight:900;color:white;cursor:pointer;letter-spacing:0.3px;transition:opacity 0.2s;margin-bottom:10px;box-shadow:0 4px 24px rgba(232,32,32,0.4);"
+      <!-- Verweis auf die vollstaendige App -->
+      <button onclick="openVollversion()"
+        style="width:100%;background:linear-gradient(135deg,#E82020,#b51818);border:none;border-radius:14px;padding:17px;font-family:'Exo 2',sans-serif;font-size:16px;font-weight:800;color:white;cursor:pointer;transition:opacity 0.2s;"
         onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">
-        🎓 Jetzt kaufen – 99,99 €
+        Zur vollständigen App
       </button>
 
-      <!-- Lade-Indikator -->
-      <div id="iap-loading" style="display:none;text-align:center;padding:12px;font-size:13px;color:rgba(255,255,255,0.5);">⏳ Verbinde mit App Store…</div>
+      <div style="text-align:center;font-size:12px;color:rgba(255,255,255,0.45);margin-top:10px;line-height:1.6;">
+        Alle Fachbereiche gibt es als eigene App bei Google Play.
+      </div>
 
       <!-- Trennlinie -->
       <div style="display:flex;align-items:center;gap:10px;margin:14px 0;">
@@ -1850,16 +1848,9 @@
 
       <!-- Kostenlos reinschauen -->
       <button onclick="openFreeContent()"
-        style="width:100%;background:transparent;border:1.5px solid rgba(255,255,255,0.2);border-radius:14px;padding:14px;font-family:'Exo 2',sans-serif;font-size:14px;font-weight:700;color:rgba(255,255,255,0.75);cursor:pointer;letter-spacing:0.3px;transition:all 0.2s;margin-bottom:14px;"
+        style="width:100%;background:transparent;border:1.5px solid rgba(255,255,255,0.2);border-radius:14px;padding:14px;font-family:'Exo 2',sans-serif;font-size:14px;font-weight:700;color:rgba(255,255,255,0.75);cursor:pointer;transition:all 0.2s;"
         onmouseover="this.style.borderColor='rgba(255,255,255,0.5)';this.style.color='white'" onmouseout="this.style.borderColor='rgba(255,255,255,0.2)';this.style.color='rgba(255,255,255,0.75)'">
-        👀 Fachbereich MIKP gratis testen
-      </button>
-
-      <!-- Kauf wiederherstellen (Apple Pflicht) -->
-      <button onclick="iapRestore()"
-        style="width:100%;background:transparent;border:none;padding:8px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:rgba(255,255,255,0.35);cursor:pointer;transition:color 0.2s;"
-        onmouseover="this.style.color='rgba(255,255,255,0.65)'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">
-        Kauf wiederherstellen
+        👀 Fachbereich MIKP kostenlos ansehen
       </button>
 
       <!-- Zurück zur App (nur wenn bereits gekauft/Gratis-Bereich) -->
@@ -61602,8 +61593,6 @@ async function sha256(text) {
 const FREE_CHAPTERS = new Set(['mikp-kap1', 'mikp-kap2', 'mikp-kap3', 'mikp-kap4', 'mikp-kap5', 'mikp-kap6']);
 
 const LICENSE_KEY = 'logta-license';
-const IAP_PRODUCT_ID = 'com.logta.industriemeister.fullaccess';
-const IAP_LICENSE_VALUE = 'APPLE_IAP_PURCHASED';
 
 // Prüft ob Kapitel kostenlos zugänglich ist
 function isFreeChapter(fach, kapitelId) {
@@ -61623,8 +61612,6 @@ function isFullLicense() {
   if (window.DEV_MODE) return true;
   const saved = localStorage.getItem(LICENSE_KEY);
   if (!saved) return false;
-  // Apple IAP
-  if (saved === IAP_LICENSE_VALUE) return true;
   // SHA-256 Backup-Code (für Freunde/Familie)
   if (VALID_HASHES.has(saved)) return true;
   return false;
@@ -61637,132 +61624,23 @@ function checkChapterAccess(fach, kapitelId) {
   return false;
 }
 
-// ===== APPLE IAP FUNKTIONEN =====
+// ===== VERWEIS AUF DIE VOLLSTAENDIGE APP =====
+// Diese Vorschauversion verkauft nichts. Der Knopf oeffnet die Store-Seite
+// der vollstaendigen App.
+const VOLLVERSION_STORE_ID = 'de.logta.industriemeister.bq';
 
-function iapSetLoading(show) {
-  const btn = document.getElementById('iap-buy-btn');
-  const loading = document.getElementById('iap-loading');
-  if (btn) btn.style.display = show ? 'none' : 'block';
-  if (loading) loading.style.display = show ? 'block' : 'none';
+function openVollversion() {
+  const url = 'https://play.google.com/store/apps/details?id=' + VOLLVERSION_STORE_ID;
+  window.open(url, '_blank', 'noopener');
 }
 
-function iapShowError(msg) {
-  const el = document.getElementById('iap-error');
-  if (el) { el.textContent = msg; el.style.display = 'block'; }
-  iapSetLoading(false);
-}
-
-// Wird vom nativen iOS-Layer aufgerufen nach erfolgreichem Kauf
-function iapSuccess() {
-  try { localStorage.setItem(LICENSE_KEY, IAP_LICENSE_VALUE); } catch(e) {}
-  iapSetLoading(false);
-  openApp();
-}
-
-// Prüft, ob die Android Digital Goods API (Play Billing in der TWA) verfügbar ist
-async function getDigitalGoodsService() {
-  if (!('getDigitalGoodsService' in window)) return null;
-  try {
-    return await window.getDigitalGoodsService('https://play.google.com/billing');
-  } catch (e) {
-    return null;
-  }
-}
-
-function iapPurchase() {
-  // Native iOS App (Capacitor)
-  if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.iapPurchase) {
-    iapSetLoading(true);
-    window.webkit.messageHandlers.iapPurchase.postMessage({ productId: IAP_PRODUCT_ID });
-    return;
-  }
-  // Android TWA (Google Play Billing über Digital Goods API)
-  if ('getDigitalGoodsService' in window) {
-    androidPlayPurchase();
-    return;
-  }
-  // Web-Browser (kein Kauf möglich)
-  iapShowError('In-App-Kauf ist nur in der App verfügbar.');
-}
-
-function iapRestore() {
-  if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.iapRestore) {
-    iapSetLoading(true);
-    window.webkit.messageHandlers.iapRestore.postMessage({});
-    return;
-  }
-  if ('getDigitalGoodsService' in window) {
-    androidPlayRestore();
-    return;
-  }
-  iapShowError('Kauf wiederherstellen ist nur in der App möglich.');
-}
-
-// Android: Kauf über Play Billing anstoßen (PaymentRequest + Digital Goods API)
-async function androidPlayPurchase() {
-  iapSetLoading(true);
-  try {
-    const service = await getDigitalGoodsService();
-    if (!service) {
-      iapShowError('Google Play Billing ist auf diesem Gerät nicht verfügbar.');
-      return;
-    }
-    const paymentMethods = [{
-      supportedMethods: 'https://play.google.com/billing',
-      data: { sku: IAP_PRODUCT_ID }
-    }];
-    const paymentDetails = {
-      total: { label: 'Vollversion', amount: { currency: 'EUR', value: '0' } }
-    };
-    const request = new PaymentRequest(paymentMethods, paymentDetails);
-    const paymentResponse = await request.show();
-    const purchaseToken = paymentResponse.details && paymentResponse.details.purchaseToken;
-    await paymentResponse.complete('success');
-    if (purchaseToken) {
-      // Einmalkauf (nicht verbrauchbar) bei Google bestätigen
-      await service.acknowledge(purchaseToken, 'onetime');
-    }
-    iapSuccess();
-  } catch (e) {
-    // Nutzer hat Kaufdialog abgebrochen oder Fehler bei Play Billing
-    if (e && e.name !== 'AbortError') {
-      iapShowError('Kauf konnte nicht abgeschlossen werden. Bitte erneut versuchen.');
-    } else {
-      iapSetLoading(false);
-    }
-  }
-}
-
-// Android: bereits getätigten Kauf wiederherstellen
-async function androidPlayRestore() {
-  iapSetLoading(true);
-  try {
-    const service = await getDigitalGoodsService();
-    if (!service) {
-      iapShowError('Google Play Billing ist auf diesem Gerät nicht verfügbar.');
-      return;
-    }
-    const purchases = await service.listPurchases();
-    const owned = purchases && purchases.find(function(p) { return p.itemId === IAP_PRODUCT_ID; });
-    if (owned) {
-      iapSuccess();
-    } else {
-      iapShowError('Kein vorheriger Kauf für dieses Gerät gefunden.');
-      iapSetLoading(false);
-    }
-  } catch (e) {
-    iapShowError('Wiederherstellung fehlgeschlagen. Bitte erneut versuchen.');
-  }
-}
-
-// Kostenlos reinschauen (kompletter MIKP-Bereich)
 function openFreeContent() {
   // App-Root einblenden
   const ls = document.getElementById('license-screen');
   const ar = document.getElementById('app-root');
   if (ls) { ls.style.opacity = '0'; setTimeout(() => { ls.style.display = 'none'; }, 400); }
   if (ar) ar.style.display = 'flex';
-  // Lizenz-Banner aktualisieren (zeigt "Vollversion freischalten"-Button in Sidebar)
+  // Lizenz-Banner aktualisieren (zeigt "Alle Fachbereiche ansehen"-Button in Sidebar)
   updateLicenseBanner();
   // Zurück-Button aktivieren (damit man vom Paywall zurückkann)
   const backBtn = document.getElementById('license-back-btn');
@@ -61822,15 +61700,15 @@ function updateLicenseBanner() {
     navItem.style.display = 'none';
     navItem.innerHTML = '';
   } else {
-    // Nicht freigeschaltet → "Vollversion freischalten" Button anzeigen
+    // Nicht freigeschaltet → "Alle Fachbereiche ansehen" Button anzeigen
     navItem.style.display = 'block';
     navItem.innerHTML = `
       <div onclick="openLicenseScreen()" style="margin:8px 12px 0;padding:14px 14px;background:linear-gradient(135deg,#E82020,#b51818);border-radius:12px;cursor:pointer;box-shadow:0 4px 16px rgba(232,32,32,0.35);transition:transform 0.15s, box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 20px rgba(232,32,32,0.5)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 16px rgba(232,32,32,0.35)'">
         <div style="display:flex;align-items:center;gap:10px;">
           <div style="width:32px;height:32px;background:rgba(255,255,255,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;">🎓</div>
           <div style="flex:1;min-width:0;">
-            <div style="font-family:'Exo 2',sans-serif;font-size:13px;font-weight:900;color:white;line-height:1.2;">Vollversion freischalten</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.85);margin-top:2px;">Alle 28 Kapitel · 99,99 €</div>
+            <div style="font-family:'Exo 2',sans-serif;font-size:13px;font-weight:900;color:white;line-height:1.2;">Alle Fachbereiche ansehen</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.85);margin-top:2px;">Als eigene App bei Google Play</div>
           </div>
         </div>
       </div>
@@ -61853,12 +61731,12 @@ function showPaywallOverlay(containerEl, fach, kapitelId) {
       <div style="font-size:48px;margin-bottom:16px;">🔒</div>
       <div style="font-family:'Exo 2',sans-serif;font-size:22px;font-weight:900;color:white;margin-bottom:8px;">Vollversion erforderlich</div>
       <div style="font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:28px;line-height:1.6;">
-        Dieses Kapitel ist Teil der Vollversion.<br>
-        Einmaliger Kauf · Alle Kapitel · Für immer.
+        Dieses Kapitel ist in der vollständigen App enthalten.<br>
+        Diese Vorschau zeigt den Fachbereich MIKP.
       </div>
       <button onclick="document.getElementById('paywall-overlay').remove();openLicenseScreen();"
         style="width:100%;background:linear-gradient(135deg,#E82020,#b51818);border:none;border-radius:14px;padding:16px;font-family:'Exo 2',sans-serif;font-size:16px;font-weight:900;color:white;cursor:pointer;margin-bottom:12px;box-shadow:0 4px 20px rgba(232,32,32,0.4);">
-        🎓 Jetzt kaufen – 99,99 €
+        Zur vollständigen App
       </button>
       <button onclick="document.getElementById('paywall-overlay').remove();"
         style="width:100%;background:transparent;border:1.5px solid rgba(255,255,255,0.18);border-radius:14px;padding:13px;font-family:'Exo 2',sans-serif;font-size:14px;font-weight:700;color:rgba(255,255,255,0.6);cursor:pointer;">
@@ -61868,31 +61746,6 @@ function showPaywallOverlay(containerEl, fach, kapitelId) {
   `;
   document.body.appendChild(overlay);
 }
-
-
-// ===== NATIVE iOS BRIDGE CALLBACKS =====
-// Diese Funktionen werden vom nativen Swift/Capacitor-Code aufgerufen
-
-// Kauf erfolgreich → App freischalten
-window.onIAPSuccess = function() {
-  iapSuccess();
-};
-
-// Kauf fehlgeschlagen → Fehlermeldung zeigen
-window.onIAPError = function(msg) {
-  iapShowError(msg || 'Kauf fehlgeschlagen. Bitte versuche es erneut.');
-};
-
-// Wiederherstellung erfolgreich → App freischalten
-window.onIAPRestoreSuccess = function() {
-  iapSuccess();
-};
-
-// Keine Käufe zum Wiederherstellen
-window.onIAPRestoreEmpty = function() {
-  iapSetLoading(false);
-  iapShowError('Kein vorheriger Kauf gefunden.');
-};
 
 
 document.addEventListener('DOMContentLoaded', function() {
