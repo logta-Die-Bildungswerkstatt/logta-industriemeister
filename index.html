@@ -1805,7 +1805,7 @@
 
     <!-- Was bekommst du -->
     <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:18px 20px;margin-bottom:20px;">
-      <div style="font-family:'Exo 2',sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:1px;margin-bottom:12px;">DIE VOLLSTÄNDIGE APP ENTHÄLT ENTHÄLT</div>
+      <div style="font-family:'Exo 2',sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:1px;margin-bottom:12px;">DIE VOLLSTÄNDIGE APP ENTHÄLT</div>
       <div style="display:flex;flex-direction:column;gap:9px;">
         <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.85);">
           <span style="color:#22c55e;font-size:15px;">✓</span> 5 Fachbereiche · 28 Kapitel
@@ -1825,7 +1825,7 @@
       </div>
     </div>
 
-    <!-- Kauf-Karte -->
+    <!-- Hinweis auf die vollstaendige App -->
     <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:24px;">
 
       <!-- Verweis auf die vollstaendige App -->
@@ -57481,7 +57481,7 @@ function renderFachKapitel(fach, borderClass) {
         <div class="kapitel-num">${label}</div>
         ${titleHtml}
         <div class="kapitel-card-footer">
-          <span class="kapitel-count">${isLocked ? 'Vollversion' : (kapTotal > 0 ? kapDone + '/' + kapTotal + ' Themen' : 'Bald verfügbar')}</span>
+          <span class="kapitel-count">${isLocked ? 'In der vollständigen App' : (kapTotal > 0 ? kapDone + '/' + kapTotal + ' Themen' : 'Bald verfügbar')}</span>
           <span class="kapitel-arrow">${isLocked ? '🔒' : '›'}</span>
         </div>
         ${(!isLocked && kapTotal > 0) ? `<div style="height:3px;background:#f0f0f0;border-radius:99px;margin-top:6px;overflow:hidden;"><div style="height:100%;width:${kapPct}%;background:${col};border-radius:99px;transition:width 0.8s ease;"></div></div>` : ''}
@@ -61627,7 +61627,7 @@ function checkChapterAccess(fach, kapitelId) {
 // ===== VERWEIS AUF DIE VOLLSTAENDIGE APP =====
 // Diese Vorschauversion verkauft nichts. Der Knopf oeffnet die Store-Seite
 // der vollstaendigen App.
-const VOLLVERSION_STORE_ID = 'de.logta.industriemeister.bq';
+const VOLLVERSION_STORE_ID = 'de.logta.industriemeister.meistern';
 
 function openVollversion() {
   const url = 'https://play.google.com/store/apps/details?id=' + VOLLVERSION_STORE_ID;
@@ -61669,10 +61669,6 @@ function openApp() {
 function openLicenseScreen() {
   const ls = document.getElementById('license-screen');
   if (!ls) return;
-  // Fehler zurücksetzen
-  const errEl = document.getElementById('iap-error');
-  if (errEl) errEl.style.display = 'none';
-  iapSetLoading(false);
   ls.style.display = 'flex';
   ls.style.opacity = '1';
   // Zurück-Button nur zeigen wenn man schon in der App ist
@@ -61690,7 +61686,7 @@ function closeLicenseScreen() {
   setTimeout(() => { ls.style.display = 'none'; }, 400);
 }
 
-// Sidebar-Badge aktualisieren (zeigt "Vollversion kaufen" wenn nicht freigeschaltet)
+// Sidebar-Badge aktualisieren
 function updateLicenseBanner() {
   const navItem = document.getElementById('nav-lizenz-item');
   if (!navItem) return;
@@ -61729,12 +61725,12 @@ function showPaywallOverlay(containerEl, fach, kapitelId) {
   overlay.innerHTML = `
     <div style="width:100%;max-width:360px;text-align:center;">
       <div style="font-size:48px;margin-bottom:16px;">🔒</div>
-      <div style="font-family:'Exo 2',sans-serif;font-size:22px;font-weight:900;color:white;margin-bottom:8px;">Vollversion erforderlich</div>
+      <div style="font-family:'Exo 2',sans-serif;font-size:22px;font-weight:900;color:white;margin-bottom:8px;">In der vollständigen App</div>
       <div style="font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:28px;line-height:1.6;">
         Dieses Kapitel ist in der vollständigen App enthalten.<br>
         Diese Vorschau zeigt den Fachbereich MIKP.
       </div>
-      <button onclick="document.getElementById('paywall-overlay').remove();openLicenseScreen();"
+      <button onclick="document.getElementById('paywall-overlay').remove();openVollversion();"
         style="width:100%;background:linear-gradient(135deg,#E82020,#b51818);border:none;border-radius:14px;padding:16px;font-family:'Exo 2',sans-serif;font-size:16px;font-weight:900;color:white;cursor:pointer;margin-bottom:12px;box-shadow:0 4px 20px rgba(232,32,32,0.4);">
         Zur vollständigen App
       </button>
